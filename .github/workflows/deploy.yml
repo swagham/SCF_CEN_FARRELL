@@ -34,8 +34,8 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "techplayzon-scf-cen-48"
-          entrypoint: "deno.json"
+          project: "scf-cen-capstone"
+          entrypoint: "package.json"
           root: ""
           
           

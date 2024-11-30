@@ -3,7 +3,7 @@ class PWAManager {
     static async initialize() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('/service-worker.js');
+                const registration = await navigator.serviceWorker.register('service-worker.js');
                 console.log('ServiceWorker registration successful:', registration);
                 
                 // Set up push notifications
@@ -32,7 +32,7 @@ class UIManager {
         // Add app shell elements
         document.body.innerHTML = `
             <div class="app-header">
-                <h1>DeshDrawChat</h1>
+                <h1>MeghanDrawChat</h1>
                 <div class="connection-status" id="connectionStatus"></div>
                 <button id="installPWA" class="hidden">Install App</button>
             </div>
@@ -234,16 +234,19 @@ class MessagingApp {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer API-KEY-HERE`
+                    'Authorization': 'Bearer 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'
                 },
                 body: JSON.stringify({
                     model: "gpt-4o-mini",
                     messages: [{
                         role: "user",
-                        content: message
+                        content: message,
+                        temperature: 0.7
                     }]
                 })
             });
+            
+            console.log(completion.choices[0].message);
 
             const data = await response.json();
             this.addMessageToHistory('assistant', data.choices[0].message.content);
@@ -313,6 +316,11 @@ window.addEventListener('load', async () => {
         deferredPrompt = e;
         const installButton = document.getElementById('installPWA');
         installButton.classList.remove('hidden');
+
+        document.getElementById('sendMessage').addEventListener('click', () => {
+            console.log("Button clicked");
+            // Ensure this logic is running correctly
+        });        
         
         installButton.addEventListener('click', async () => {
             if (deferredPrompt) {
